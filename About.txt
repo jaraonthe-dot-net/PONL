@@ -1,0 +1,3 @@
+PHP on line is a framework to use php scripts on the command line. Instead of tinkering with proprietary cli scripting languages, you can write them in php. The framework then makes them available on the commandline with the command ponl.
+
+- 20140601 JAR
