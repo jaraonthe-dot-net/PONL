@@ -1,0 +1,4 @@
+deployed/*
+!deployed/deployed
+scripts/*
+!scripts/scripts
