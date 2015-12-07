@@ -57,7 +57,7 @@ function readManPage($S_file) {
 if($argc < 2) {
 
 	print "PONL: Main man page:\n\n";
-	if(($page = readManPage(dirname(__FILE__).'/../ponl.php')) === FALSE) {
+	if(($S_page = readManPage(dirname(__FILE__).'/../ponl.php')) === FALSE) {
 		print " -- This page is empty. --\n";
 	} else {
 		
@@ -74,8 +74,8 @@ if($argc < 2) {
 			}
 		}
 		
-		$page = str_replace("%commandList", implode("\n", $A_list), $page);
-		print $page."\n";
+		$S_page = str_replace("%commandList", implode("\n", $A_list), $S_page);
+		print $S_page."\n";
 	}
 
 
@@ -96,10 +96,10 @@ if($argc < 2) {
 			print ":\n\n";
 		}
 		
-		if(($page = readManPage($A_ponlCommands[$argv[1]])) === FALSE) {
+		if(($S_page = readManPage($A_ponlCommands[$argv[1]])) === FALSE) {
 			print " -- This page is empty. --\n";
 		} else {
-			print $page."\n";
+			print $S_page."\n";
 		}
 		
 	} else {

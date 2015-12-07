@@ -113,7 +113,6 @@ if($argc < 2) {
 	
 		$A_commandArgs = $argv;
 		array_shift($A_commandArgs);
-		//$A_commandArgs[0] = $argv[0] . ' ' . $argv[1];
 		$A_commandArgs[0] = $A_commands[$argv[1]];
 		
 		runScript($A_commands[$argv[1]], $A_commandArgs, count($A_commandArgs), $A_commands, scan4scripts(dirname(__FILE__).'/built-in'), scan4scripts(dirname(__FILE__).'/deployed'), scan4scripts(dirname(__FILE__).'/scripts'));
