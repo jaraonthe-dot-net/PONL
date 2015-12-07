@@ -44,7 +44,7 @@ function readManPage($S_file) {
 		
 		// The first and last lines of the comment are omitted (no matter what is on them).
 		
-		$Ss_comment = explode("\n", str_replace("\n * ", "\n", str_replace("\r\n", "\n", $S_comment)));
+	$Ss_comment = explode("\n", str_replace("\n * ", "\n", str_replace("\n *\n", "\n * \n", str_replace("\n *\n", "\n * \n", str_replace("\r\n", "\n", $S_comment)))));
 		array_shift($Ss_comment);
 		array_pop($Ss_comment);
 		
@@ -55,51 +55,28 @@ function readManPage($S_file) {
 
 
 if($argc < 2) {
-	// TODO read from ponl.php
-	print <<<EOS
-PONL: Main man page:
 
-PHP on line (short: PONL) makes PHP scripting available on the command line.
-You can easily code a short (or longer) application in your favourite
-programming language and execute it on the command line like any native
-application.
-
-To execute one such application (or 'command') you have to enter
-'ponl' + the command name (see below).
-
-If you want to get more information about a command, simply type
-'ponl man' + the command name. This will display the corresponding man page.
-
-
-A list of all available commands:
-
-EOS;
-
-	ksort($A_ponlCommands);
-	
-	foreach(array_keys($A_ponlCommands) as $S_comm) {
-		print " - " . $S_comm;
+	print "PONL: Main man page:\n\n";
+	if(($page = readManPage(dirname(__FILE__).'/../ponl.php')) === FALSE) {
+		print " -- This page is empty. --\n";
+	} else {
 		
-		if(in_array($S_comm, array_keys($A_ponlCommandsBuiltIn))) {
-			print '   (built-in)';
-		} elseif(in_array($S_comm, array_keys($A_ponlCommandsDeployed))) {
-			print '   (deployed)';
+		ksort($A_ponlCommands);
+		$A_list = array();
+		
+		foreach(array_keys($A_ponlCommands) as $S_comm) {
+			if(in_array($S_comm, array_keys($A_ponlCommandsBuiltIn))) {
+				$A_list[] = ' - ' . $S_comm . '   (built-in)';
+			} elseif(in_array($S_comm, array_keys($A_ponlCommandsDeployed))) {
+				$A_list[] = ' - ' . $S_comm . '   (deployed)';
+			} else {
+				$A_list[] = ' - ' . $S_comm;
+			}
 		}
 		
-		print "\n";
+		$page = str_replace("%commandList", implode("\n", $A_list), $page);
+		print $page."\n";
 	}
-	
-	print <<<EOS
-
-
---
-PONL - PHP on line
-Copyright (C) 2015 Jakob Rathbauer <ponl@software.jaraonthe.net>.
-This program comes with ABSOLUTELY NO WARRANTY; it is free software under the
-terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-EOS;
 
 
 // Command man page
