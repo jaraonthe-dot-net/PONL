@@ -45,7 +45,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * (at your option) any later version.
 */
 
-chdir(dirname(__FILE__)); // TODO: don't alter the working directory! Do all includes based on current file.
+// Note: working directory is not touched. File references relative to THIS file
+//  have to be done with dirname(__FILE__).
 
 
 // can be feed with more than one dir. Earlier dirs will take precedence in case of collision
