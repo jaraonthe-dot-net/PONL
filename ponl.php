@@ -104,7 +104,8 @@ function runScript($S_file, $argv, $argc, $A_ponlCommands, $A_ponlCommandsBuiltI
 
 // No command given
 if($argc < 2) {
-	print "PONL: No command specified. Type 'ponl help' for details.";
+	print "PONL: No command specified. Type 'ponl help' for 
+details.\r\n";
 } else {
 	
 	$A_commands = scan4scripts(dirname(__FILE__).'/built-in', dirname(__FILE__).'/deployed', dirname(__FILE__).'/scripts');
@@ -119,7 +120,8 @@ if($argc < 2) {
 		runScript($A_commands[$argv[1]], $A_commandArgs, count($A_commandArgs), $A_commands, scan4scripts(dirname(__FILE__).'/built-in'), scan4scripts(dirname(__FILE__).'/deployed'), scan4scripts(dirname(__FILE__).'/scripts'));
 		
 	} else {
-		die("PONL: Command not found. Type 'ponl help' for a list of all available commands.");
+		die("PONL: Command not found. Type 'ponl help' for a 
+list of all available commands.\r\n");
 	}
 }
 ?>

@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+// Entry point on linux.
+// This file must be executable!
+// ... and added to the path.
+
+include "ponl.php"
+?>
