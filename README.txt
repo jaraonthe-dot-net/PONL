@@ -18,20 +18,21 @@ PONL also offers a man page system. Every script can supply its own help page.
 =REQUIREMENTS=
 
 - PHP 5.0.0. or later
-- Windows OS (for now)
+- Windows or Linux OS
 
 
 =SETUP=
 
-Note: Only Windows is supported for now.
-
 - Put all PONL files in a directory of your choosing.
-- Edit the Path environment variable (somewhere under System Properties):
-	+ Make sure that your installation of PHP is in the path
-	+ Ensure that typing 'php' in the command line runs the php exe.
-	+ Add the directory where you installed PONL to the path.
+- WINDOWS: Edit the Path environment variable (somewhere under System Properties):
+    + Make sure that your installation of PHP is in the path
+    + Ensure that typing 'php' in the command line runs the php exe.
+    + Add the directory where you installed PONL to the path.
+- LINUX: Edit the PATH:
+    + Ensure that typing 'php' in the command line runs the php binary.
+    + Add the directory where you installed PONL to the path.
 
-- Now, by typing 'PONL' in the command line, you can run ponl. It should output
+- Now, by typing 'ponl' in the command line, you can run ponl. It should output
 a message like this: "PON: No command specified. Type 'ponl help' for details."
 
 - Installation complete. Start using PONL.
@@ -84,10 +85,10 @@ To call the man page, type 'ponl man <script>'.
 
 =COPYRIGHT&LICENSE NOTICE=
 
-This Readme was written by Jakob Rathbauer. Last modified on 2015-12-08.
+This Readme was written by Jakob Rathbauer. Last modified on 2019-06-27.
 
 PONL - PHP on line
-Copyright (C) 2015 Jakob Rathbauer <ponl@software.jaraonthe.net>.
+Copyright (C) 2019 Jakob Rathbauer <ponl@software.jaraonthe.net>.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
