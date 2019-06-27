@@ -22,5 +22,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * Alias for man.
 */
 
-require_once dirname(__FILE__).'/man.ponl';
-?>
+require_once dirname(__FILE__) . '/man.ponl';

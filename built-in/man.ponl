@@ -22,88 +22,104 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  * Provides Help Pages for PONL.
 */
 
-function readManPage($S_file) {
-	$A_tokens = token_get_all(file_get_contents($S_file));
-	
-	foreach($A_tokens as $token) {
-		if(!is_array($token)) {
-			continue;
-		}
-		
-		if($token[0] == T_DOC_COMMENT) {
-			if(stripos($token[1], '/** man page') === 0) {
-				$S_comment = $token[1];
-				break;
-			}
-		}
-	}
-	
-	if(!isset($S_comment)) {
-		return FALSE;
-	} else {
-		
-		// The first and last lines of the comment are omitted (no matter what is on them).
-		
-	$Ss_comment = explode("\n", str_replace("\n * ", "\n", str_replace("\n *\n", "\n * \n", str_replace("\n *\n", "\n * \n", str_replace("\r\n", "\n", $S_comment)))));
-		array_shift($Ss_comment);
-		array_pop($Ss_comment);
-		
-		return implode("\r\n", $Ss_comment);
-	}
+function readManPage($S_file)
+{
+    $A_tokens = token_get_all(file_get_contents($S_file));
+    
+    foreach ($A_tokens as $token) {
+        if (!is_array($token)) {
+            continue;
+        }
+        if ($token[0] == T_DOC_COMMENT) {
+            if (stripos($token[1], '/** man page') === 0) {
+                $S_comment = $token[1];
+                break;
+            }
+        }
+    }
+    
+    if (!isset($S_comment)) {
+        return FALSE;
+    } else {
+        
+        $Ss_comment = explode(
+            "\n",
+            str_replace(
+                "\n * ",
+                "\n",
+                str_replace(
+                    "\n *\n",
+                    "\n * \n",
+                    str_replace(
+                        "\n *\n",
+                        "\n * \n",
+                        str_replace(
+                            "\r\n",
+                            "\n",
+                            $S_comment
+                        )
+                    )
+                )
+            )
+        );
+        // The first and last lines of the comment are omitted (no matter what is on them).
+        array_shift($Ss_comment);
+        array_pop($Ss_comment);
+        
+        return implode("\r\n", $Ss_comment);
+    }
 }
 
 
 
-if($argc < 2) {
-
-	print "PONL: Main man page:\n\n";
-	if(($S_page = readManPage(dirname(__FILE__).'/../ponl.php')) === FALSE) {
-		print " -- This page is empty. --\n";
-	} else {
-		
-		ksort($A_ponlCommands);
-		$A_list = array();
-		
-		foreach(array_keys($A_ponlCommands) as $S_comm) {
-			if(in_array($S_comm, array_keys($A_ponlCommandsBuiltIn))) {
-				$A_list[] = ' - ' . $S_comm . '   (built-in)';
-			} elseif(in_array($S_comm, array_keys($A_ponlCommandsDeployed))) {
-				$A_list[] = ' - ' . $S_comm . '   (deployed)';
-			} else {
-				$A_list[] = ' - ' . $S_comm;
-			}
-		}
-		
-		$S_page = str_replace("%commandList", implode("\n", $A_list), $S_page);
-		print $S_page."\n";
-	}
-
+if ($argc < 2) {
+    print "PONL: Main man page:\n\n";
+    
+    if (($S_page = readManPage(dirname(__FILE__) . '/../ponl.php')) === FALSE) {
+        print " -- This page is empty. --\n";
+    } else {
+        
+        ksort($A_ponlCommands);
+        $A_list = array();
+        
+        foreach (array_keys($A_ponlCommands) as $S_comm) {
+            if (in_array($S_comm, array_keys($A_ponlCommandsBuiltIn))) {
+                $A_list[] = ' - ' . $S_comm . '   (built-in)';
+            } elseif (in_array($S_comm, array_keys($A_ponlCommandsDeployed))) {
+                $A_list[] = ' - ' . $S_comm . '   (deployed)';
+            } else {
+                $A_list[] = ' - ' . $S_comm;
+            }
+        }
+        
+        $S_page = str_replace("%commandList", implode("\n", $A_list), $S_page);
+        print $S_page . "\n";
+    }
 
 // Command man page
 } else {
-	print "PONL: man page for '".$argv[1]."'";
-	
-	if(in_array($argv[1], array_keys($A_ponlCommands))) {
-		
-		// built-in
-		if(in_array($argv[1], array_keys($A_ponlCommandsBuiltIn))) {
-			print " (built-in):\n\n";
-			
-		// deployed
-		} elseif(in_array($argv[1], array_keys($A_ponlCommandsDeployed))) {
-			print " (deployed):\n\n";
-		} else {
-			print ":\n\n";
-		}
-		
-		if(($S_page = readManPage($A_ponlCommands[$argv[1]])) === FALSE) {
-			print " -- This page is empty. --\n";
-		} else {
-			print $S_page."\n";
-		}
-		
-	} else {
-		print ":\n\n  -- Page not found. Type 'ponl help' for a list of all available commands. --\n";
-	}
+    print "PONL: man page for '" . $argv[1] . "'";
+    
+    if (in_array($argv[1], array_keys($A_ponlCommands))) {
+        
+        // built-in
+        if (in_array($argv[1], array_keys($A_ponlCommandsBuiltIn))) {
+            print " (built-in):\n\n";
+            
+        // deployed
+        } elseif (in_array($argv[1], array_keys($A_ponlCommandsDeployed))) {
+            print " (deployed):\n\n";
+        } else {
+            print ":\n\n";
+        }
+        
+        if (($S_page = readManPage($A_ponlCommands[$argv[1]])) === FALSE) {
+            print " -- This page is empty. --\n";
+        } else {
+            print $S_page . "\n";
+        }
+        
+    } else {
+        print ":\n\n  -- Page not found. Type 'ponl help' for a list of all available commands. --\n";
+    }
 }
-?>
